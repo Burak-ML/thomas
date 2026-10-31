@@ -1,86 +1,92 @@
-<div align="center">
+# Thomas Bot
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:000000,50:00ff41,100:000000&height=200&section=header&text=Thomas%20Bot&fontSize=70&fontColor=00ff41&fontAlignY=38&desc=Discord%20Registration%20and%20Automation&descAlignY=55&descAlign=50&animation=twinkling" />
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-43853D?logo=node.js&logoColor=white)
+![discord.js](https://img.shields.io/badge/discord.js-v14-5865F2?logo=discord&logoColor=white)
 
-<br/>
+**A Discord bot that registers new members: they pick their field, the bot assigns the right roles and logs it.**
 
-![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Discord.js](https://img.shields.io/badge/Discord.js-5865F2?style=for-the-badge&logo=discord&logoColor=white)
-![Railway](https://img.shields.io/badge/Railway-131415?style=for-the-badge&logo=railway&logoColor=white)
+When someone joins the server, Thomas gives them a temporary "unregistered" role and points them to a registration panel. They choose their professions from a menu and confirm with a button. The bot then swaps the temporary role for the member role, adds the chosen profession roles and writes the result to a log channel.
 
-</div>
+## How it works
 
----
+1. **Join.** A new member automatically receives the `Junior 1` and `Unregistered` roles, and a welcome message points them to the registration channel.
+2. **Register.** In the registration panel the member selects one or more professions and presses the confirm button.
+3. **Done.** The bot removes `Unregistered`, adds `Member` and the selected profession roles, posts a log entry and shows the member a private confirmation.
 
-## 🤖 `Thomas Bot (Matrix)`
+Available professions: Web Designer, Game Designer, Backend Developer, Frontend Developer, Mobile Developer, UI/UX Designer, Content Creator and Other.
 
-Thomas, Discord sunucusu için geliştirilmiş, yüksek performanslı ve tam otomatik bir kayıt/yönetim botudur. Modern **Discord.js v14** yapısı üzerine inşa edilmiştir ve Slash Commands (`/`) destekler.
+## Commands
 
-> *"Welcome to the real world."*
+| Command | Who | Purpose |
+|---------|-----|---------|
+| `/setup-kayit [kanal]` | Admin | Post the registration panel in a channel (default: the current one) |
+| `/kayitsizlar` | Admin | List members who have not registered yet |
 
----
+## Getting started
 
-## ⚙️ Özellikler / Features
+Requires Node.js 18 or later and a Discord application with a bot token.
 
-- 🛡️ **Otomatik Kayıt:** Kullanıcıları doğrulama adımlarından geçirerek uygun rolleri verir.
-- ⚡ **Slash Commands:** Modern `/` komut altyapısı ile kolay kullanım.
-- 🚄 **Railway Deployment:** 7/24 bulut ortamında kesintisiz çalışma.
-- 🔒 **Güvenli:** Çevre değişkenleri (`.env`) ile token güvenliği.
-
----
-
-## 🏗️ Tech Stack
-
-- **Runtime:** Node.js (v18+)
-- **Library:** Discord.js v14
-- **Environment:** `dotenv`
-- **Hosting:** Railway (Procfile & railway.toml yapılandırması mevcut)
-
----
-
-## 🚀 Kurulum / Setup
-
-Botu kendi ortamınızda çalıştırmak için:
-
-### 1. Repoyu Klonlayın
 ```bash
-git clone https://github.com/Kayra-ML/thomas.git
+git clone https://github.com/Burak-ML/thomas.git
 cd thomas
-```
-
-### 2. Bağımlılıkları Yükleyin
-```bash
 npm install
+cp .env.example .env
 ```
 
-### 3. Ortam Değişkenlerini Ayarlayın
-`.env.example` dosyasını kopyalayıp `.env` adıyla kaydedin ve içini doldurun:
+Fill in `.env`. All IDs are Discord snowflakes (enable Developer Mode in Discord, then right-click an item and choose Copy ID).
+
 ```env
-DISCORD_TOKEN=sizin_bot_tokeniniz
-CLIENT_ID=bot_id_numaraniz
-GUILD_ID=sunucu_id_numaraniz
-# ...diğer ayarlar
+DISCORD_TOKEN=your_bot_token
+CLIENT_ID=your_application_id
+GUILD_ID=your_server_id
+
+# Channels
+KAYIT_KANAL_ID=registration channel
+LOG_KANAL_ID=log channel
+GIRIS_KANAL_ID=welcome channel (optional)
+
+# Roles
+KAYITSIZ_ROL_ID=unregistered role
+JUNIOR1_ROL_ID=role given on join
+UYE_ROL_ID=member role given after registration
+
+# Profession roles
+ROL_WEB_DESIGNER=...
+ROL_GAME_DESIGNER=...
+ROL_BACKEND_DEV=...
+ROL_FRONTEND_DEV=...
+ROL_MOBILE_DEV=...
+ROL_UIUX_DESIGNER=...
+ROL_CONTENT_CREATOR=...
+ROL_OTHER=...
 ```
 
-### 4. Komutları Discord'a Yükleyin (Slash Commands)
+Register the slash commands once, then start the bot:
+
 ```bash
 npm run deploy
+npm start          # or: npm run dev   (restarts on file changes)
 ```
 
-### 5. Botu Başlatın
-```bash
-npm start
-# veya geliştirme modu için:
-npm run dev
+Finally, run `/setup-kayit` in the registration channel to post the panel. The bot's role must sit above the roles it assigns.
+
+## Deployment
+
+The repository includes a `Procfile` and `railway.toml`, so it runs on [Railway](https://railway.app) without extra setup. Connect the repository and add the same environment variables.
+
+## Project structure
+
+```
+src/
+  index.js            client setup and event loading
+  config.js           IDs and role mapping read from the environment
+  commands/           /setup-kayit and /kayitsizlar
+  events/             ready, guildMemberAdd, interactionCreate
+  utils/              embeds and the registration logic
+deploy-commands.js    registers the slash commands with Discord
 ```
 
----
+## License
 
-## ☁️ Deployment
-
-Bu proje doğrudan **Railway** üzerinde çalışmaya hazırdır. 
-`railway.toml` ve `Procfile` dosyaları önceden yapılandırılmıştır. Tek yapmanız gereken repoyu Railway'e bağlamak ve ortam değişkenlerini eklemektir.
-
-<div align="center">
-  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:000000,50:00ff41,100:000000&height=120&section=footer" />
-</div>
+MIT. See [LICENSE](LICENSE).
