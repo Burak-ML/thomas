@@ -6,8 +6,6 @@ Thomas guides new server members through an interactive registration panel, repl
 
 **Explore:** [Workflow](#how-it-works) · [Commands](#commands) · [Setup](#getting-started) · [Deployment](#deployment)
 
-**A Discord bot that registers new members: they pick their field, the bot assigns the right roles and logs it.**
-
 When someone joins the server, Thomas gives them a temporary "unregistered" role and points them to a registration panel. They choose their professions from a menu and confirm with a button. The bot then swaps the temporary role for the member role, adds the chosen profession roles and writes the result to a log channel.
 
 ## How it works
