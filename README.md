@@ -1,8 +1,10 @@
 # Thomas Bot
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Node.js](https://img.shields.io/badge/Node.js-18%2B-43853D?logo=node.js&logoColor=white)
-![discord.js](https://img.shields.io/badge/discord.js-v14-5865F2?logo=discord&logoColor=white)
+**A straightforward Discord registration bot for onboarding members and assigning profession-based roles.**
+
+Thomas guides new server members through an interactive registration panel, replaces temporary roles after confirmation, and logs the result for moderators. It focuses on a clearly scoped, repeatable onboarding flow.
+
+**Explore:** [Workflow](#how-it-works) · [Commands](#commands) · [Setup](#getting-started) · [Deployment](#deployment)
 
 **A Discord bot that registers new members: they pick their field, the bot assigns the right roles and logs it.**
 
